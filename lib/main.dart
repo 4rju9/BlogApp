@@ -31,7 +31,9 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    context.read<AuthBloc>().add(AuthIsUserLoggedIn());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AuthBloc>().add(AuthIsUserLoggedIn());
+    });
   }
 
   @override
