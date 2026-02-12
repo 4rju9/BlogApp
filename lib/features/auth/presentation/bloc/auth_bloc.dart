@@ -15,6 +15,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignInUsecase _signInUsecase;
   final CurrentUserUsecase _currentUserUsecase;
   final AppUserCubit _appUserCubit;
+
   AuthBloc({
     required SignUpUsecase signUpUsecase,
     required SignInUsecase signInUsecase,
@@ -25,13 +26,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
        _currentUserUsecase = currentUserUsecase,
        _appUserCubit = appUserCubit,
        super(AuthInitial()) {
+    on<AuthEvent>((_, emit) => emit(AuthLoading()));
     on<AuthSignUp>(_onAuthSignUp);
     on<AuthSignIn>(_onAuthSignIn);
     on<AuthIsUserLoggedIn>(_isUserLoggedIn);
   }
 
   void _onAuthSignUp(AuthSignUp event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
     final res = await _signUpUsecase(event.headers);
     res.fold(
       (failure) => emit(AuthFailure(message: failure.message)),
@@ -40,7 +41,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _onAuthSignIn(AuthSignIn event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
     final res = await _signInUsecase(event.headers);
     res.fold(
       (failure) => emit(AuthFailure(message: failure.message)),
