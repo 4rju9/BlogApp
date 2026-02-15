@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:blog_app/core/theme/app_pallete.dart';
+import 'package:blog_app/core/utils/pick_image.dart';
 import 'package:blog_app/features/blog/presentation/widgets/blog_editor.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,6 +21,16 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
   final titleController = TextEditingController();
   final contentController = TextEditingController();
   List<String> selectedChips = [];
+  File? image;
+
+  void selectImage() async {
+    final pickedImage = await pickImage();
+    if (pickedImage != null) {
+      setState(() {
+        image = pickedImage;
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -47,26 +60,36 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
           padding: const EdgeInsets.all(32.0),
           child: Column(
             children: [
-              DottedBorder(
-                options: RoundedRectDottedBorderOptions(
-                  color: AppPallete.borderColor,
-                  strokeWidth: 2,
-                  strokeCap: StrokeCap.round,
-                  dashPattern: [10, 5],
-                  radius: Radius.circular(16),
-                ),
-                child: Container(
-                  height: 150,
-                  width: double.infinity,
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(CupertinoIcons.folder, size: 40),
-                      SizedBox(height: 15),
-                      Text("Select your image", style: TextStyle(fontSize: 15)),
-                    ],
-                  ),
-                ),
+              GestureDetector(
+                onTap: () {
+                  selectImage();
+                },
+                child: image != null
+                    ? Image.file(image!)
+                    : DottedBorder(
+                        options: RoundedRectDottedBorderOptions(
+                          color: AppPallete.borderColor,
+                          strokeWidth: 2,
+                          strokeCap: StrokeCap.round,
+                          dashPattern: [10, 5],
+                          radius: Radius.circular(16),
+                        ),
+                        child: Container(
+                          height: 150,
+                          width: double.infinity,
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(CupertinoIcons.folder, size: 40),
+                              SizedBox(height: 15),
+                              Text(
+                                "Select your image",
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
               ),
               const SizedBox(height: 20),
               SingleChildScrollView(
