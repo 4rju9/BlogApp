@@ -55,11 +55,11 @@ class _SignupPageState extends State<SignupPage> {
                 children: [
                   Text(
                     "Get Started",
-                    style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "Create a new account.",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 32),
                   AuthField(hintText: "Name", controller: nameController),

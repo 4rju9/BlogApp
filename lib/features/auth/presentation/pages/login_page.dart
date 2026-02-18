@@ -52,11 +52,11 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Text(
                     "Welcome Back",
-                    style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "Sign in to your account.",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 32),
                   AuthField(hintText: "Email", controller: emailController),

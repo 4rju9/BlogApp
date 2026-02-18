@@ -7,6 +7,12 @@ import 'package:blog_app/features/auth/domain/usecases/current_user_usecase.dart
 import 'package:blog_app/features/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:blog_app/features/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:blog_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:blog_app/features/blog/data/datasources/blog_remote_data_source.dart';
+import 'package:blog_app/features/blog/data/repository/blog_repository_impl.dart';
+import 'package:blog_app/features/blog/domain/repository/blog_repository.dart';
+import 'package:blog_app/features/blog/domain/usecase/get_all_blogs_usecase.dart';
+import 'package:blog_app/features/blog/domain/usecase/upload_blog_usecase.dart';
+import 'package:blog_app/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -24,11 +30,13 @@ Future<void> initDependencies() async {
 
   // Auth Dependencies
   _initAuth();
+  // Blog Dependencies
+  _initBlog();
 }
 
 void _initAuth() {
   sl
-    // Remote Data Source
+    // Auth Remote Data Source
     ..registerFactory<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImpl(sl()),
     )
@@ -48,5 +56,23 @@ void _initAuth() {
         currentUserUsecase: sl(),
         appUserCubit: sl(),
       ),
+    );
+}
+
+void _initBlog() {
+  sl
+    // Blog Remote Data Source
+    ..registerFactory<BlogRemoteDataSource>(
+      () => BlogRemoteDataSourceImpl(sl()),
+    )
+    // Blog Repository
+    ..registerFactory<BlogRepository>(() => BlogRepositoryImpl(sl()))
+    // Upload Blog Usecase
+    ..registerFactory(() => UploadBlogUsecase(sl()))
+    // Get All Blogs Usecase
+    ..registerFactory(() => GetAllBlogsUsecase(sl()))
+    // Blog Bloc
+    ..registerLazySingleton(
+      () => BlogBloc(uploadBlogUsecase: sl(), getAllBlogsUsecase: sl()),
     );
 }
