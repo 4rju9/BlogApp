@@ -6,6 +6,16 @@ This project focuses on **real product workflows** rather than UI-only demonstra
 
 ---
 
+## 📸 Screenshots
+
+| Login | Registration | Create Blog |
+|------|------|-----------|
+| ![Login](screenshots/login.png) | ![Registration](screenshots/registration.png) | ![Create Blog](screenshots/addblog.png) |
+
+| Blog Details | Home Page |
+|-------------|-------------|
+| ![Blog Detail](screenshots/blogdetail.png) | ![Home Page](screenshots/dashboard.png) |
+
 ## 🚀 Key Features
 
 - 🔐 **Authentication**
